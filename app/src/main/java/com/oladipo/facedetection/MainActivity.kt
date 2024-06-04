@@ -486,7 +486,7 @@ class MainActivity : AppCompatActivity() {
         var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
         file = File(file,"${UUID.randomUUID()}.jpg")
         val stream: OutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream)
+        bitmap.compress(Bitmap.CompressFormat.PNG,50,stream)
         stream.flush()
         stream.close()
         return file
