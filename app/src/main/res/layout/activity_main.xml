@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context=".MainActivity">
+
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"/>
+
+
+    <FrameLayout
+        android:id="@+id/top_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="6dp"
+        android:background="@color/black_translucent"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="@id/preview_view">
+
+        <TextView
+            android:id="@+id/helper_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingStart="27dp"
+            android:paddingTop="7dp"
+            android:paddingEnd="27dp"
+            android:paddingBottom="7dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#F4F4F4"
+            android:textSize="13sp"
+            android:gravity="center_horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    </FrameLayout>
+
+    <com.oladipo.facedetection.ViewOverlay
+        android:id="@+id/constraint_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layerType="software"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_text_layout" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/resetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:backgroundTint="#34EFF1FF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/preview_view"/>
+
+    <View
+        android:id="@+id/bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#000"
+        app:layout_constraintTop_toTopOf="@+id/camera_capture_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/flip_camera"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="36dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/flip_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/camera_capture_button" />
+
+    <TextView
+        android:id="@+id/camera_capture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="15dp"
+        android:padding="20dp"
+        android:scaleType="fitCenter"
+        android:textColor="@color/white"
+        android:text="Upload Photo"
+        android:enabled="false"
+        android:textSize="17sp"
+        app:drawableBottomCompat = "@drawable/ic_camera_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/flip_camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:src="@drawable/flip_camera"
+        app:layout_constraintBottom_toBottomOf="@+id/camera_capture_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/camera_capture_button"
+        app:layout_constraintVertical_bias="0.26"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
