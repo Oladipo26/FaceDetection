@@ -241,9 +241,10 @@ class MainActivity : AppCompatActivity() {
 
         var gestureList = mutableMapOf<Gesture, GestureStatus>()
         val chosenGestures = Gesture.getChosenGestures()
-        helperText.text = "Please make this gesture: " +
-                "${chosenGestures[0].name.lowercase().replaceFirstChar(Char::uppercase)
-                    .replace("_", " ")}"/* +
+//        helperText.text = "Please make this gesture: " +
+//                "${chosenGestures[0].name.lowercase().replaceFirstChar(Char::uppercase)
+//                    .replace("_", " ")}"
+        /* +
                 "${
                     chosenGestures[1].name.lowercase().replaceFirstChar(Char::uppercase)
                         .replace("_", " ")
@@ -253,7 +254,7 @@ class MainActivity : AppCompatActivity() {
                         .replace("_", " ")
                 }"*/
         chosenGestures.forEach {
-            gestureList[it] = GestureStatus.NOT_DONE
+            gestureList[it] = GestureStatus.DONE
         }
 
         var trackingID = 0
@@ -300,7 +301,11 @@ class MainActivity : AppCompatActivity() {
 
                 detector.process(image)
                     .addOnSuccessListener { faces ->
-                       // overlay.changeCircleColor(if (faces.isNullOrEmpty().not()) android.R.color.holo_green_light else android.R.color.holo_red_dark)
+                        overlay.changeCircleColor(if (faces.isNullOrEmpty().not()) android.R.color.holo_green_light else android.R.color.holo_red_dark)
+                        if (faces.isNullOrEmpty()){
+                            helperText.text = "NO FACE IS SHOWING"
+                            captureBtn.isEnabled = false
+                        }
                         if (faces.any { it.trackingId == trackingID }.not()) { gestureList = gestureList.mapValues { GestureStatus.NOT_DONE }.toMutableMap() }
 
                         for (face in faces) {
@@ -328,50 +333,50 @@ class MainActivity : AppCompatActivity() {
                             // If classification was enabled:
                             Log.d("reset", "$rotY $rotX $rotZ")
 
-                            if (faces.size > 1) {
-                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
-                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
-                                    .replace("_", " ")
-//                                Toast.makeText(this@MainActivity, faces.size.toString(), Toast.LENGTH_SHORT).show()
-                                overlay.changeCircleColor(android.R.color.holo_red_light)
-                            }
+//                            if (faces.size > 1) {
+//                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
+//                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
+//                                    .replace("_", " ")
+////                                Toast.makeText(this@MainActivity, faces.size.toString(), Toast.LENGTH_SHORT).show()
+//                                overlay.changeCircleColor(android.R.color.holo_red_light)
+//                            }
 
-                            if (rotY > 25f && gestureList.containsKey(Gesture.TURN_LEFT)) {
-                                //update the required gesture status
-                                gestureList[Gesture.TURN_LEFT] = GestureStatus.DONE
-                                //update the instruction text
-                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
-                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
-                                    .replace("_", " ")
-                                overlay.changeCircleColor(android.R.color.holo_red_light)
-                            }
-
-                            if (rotY < -25f && gestureList.containsKey(Gesture.TURN_RIGHT)) {
-                                gestureList[Gesture.TURN_RIGHT] = GestureStatus.DONE
-
-                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
-                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
-                                    .replace("_", " ")
-                                overlay.changeCircleColor(android.R.color.holo_red_light)
-                            }
-
-                            if (rotX > 15f && gestureList.containsKey(Gesture.HEAD_UP)) {
-                                gestureList[Gesture.HEAD_UP] = GestureStatus.DONE
-
-                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
-                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
-                                    .replace("_", " ")
-                                overlay.changeCircleColor(android.R.color.holo_red_light)
-                            }
-
-                            if (rotX < -15f && gestureList.containsKey(Gesture.HEAD_DOWN)) {
-                                gestureList[Gesture.HEAD_DOWN] = GestureStatus.DONE
-
-                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
-                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
-                                    .replace("_", " ")
-                                overlay.changeCircleColor(android.R.color.holo_red_light)
-                            }
+//                            if (rotY > 25f && gestureList.containsKey(Gesture.TURN_LEFT)) {
+//                                //update the required gesture status
+//                                gestureList[Gesture.TURN_LEFT] = GestureStatus.DONE
+//                                //update the instruction text
+//                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
+//                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
+//                                    .replace("_", " ")
+//                                overlay.changeCircleColor(android.R.color.holo_red_light)
+//                            }
+//
+//                            if (rotY < -25f && gestureList.containsKey(Gesture.TURN_RIGHT)) {
+//                                gestureList[Gesture.TURN_RIGHT] = GestureStatus.DONE
+//
+//                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
+//                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
+//                                    .replace("_", " ")
+//                                overlay.changeCircleColor(android.R.color.holo_red_light)
+//                            }
+//
+//                            if (rotX > 15f && gestureList.containsKey(Gesture.HEAD_UP)) {
+//                                gestureList[Gesture.HEAD_UP] = GestureStatus.DONE
+//
+//                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
+//                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
+//                                    .replace("_", " ")
+//                                overlay.changeCircleColor(android.R.color.holo_red_light)
+//                            }
+//
+//                            if (rotX < -15f && gestureList.containsKey(Gesture.HEAD_DOWN)) {
+//                                gestureList[Gesture.HEAD_DOWN] = GestureStatus.DONE
+//
+//                                (gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
+//                                    ?:chosenGestures[0].name).lowercase().replaceFirstChar(Char::uppercase)
+//                                    .replace("_", " ")
+//                                overlay.changeCircleColor(android.R.color.holo_red_light)
+//                            }
 
 //                            if (face.smilingProbability != null) {
 //                                val smileProb = face.smilingProbability
@@ -386,12 +391,22 @@ class MainActivity : AppCompatActivity() {
 //                                }
 //                            }
 
+                            gestureList[Gesture.TURN_LEFT] = GestureStatus.DONE
+                            gestureList[Gesture.TURN_RIGHT] = GestureStatus.DONE
+                            gestureList[Gesture.HEAD_UP] = GestureStatus.DONE
+                            gestureList[Gesture.HEAD_DOWN] = GestureStatus.DONE
+
                             if (gestureList.all { it.value == GestureStatus.DONE }) {
-                                helperText.text = "YOU CAN TAKE THE PICTURE"
-                                helperText.setTextColor(resources.getColor(R.color.light_green))
-                                captureBtn.isEnabled = true
-                                overlay.changeCircleColor(android.R.color.holo_green_light)
-                                break
+                                if (faces.isNullOrEmpty().not() && faces.size == 1) {
+                                    helperText.text = "YOU CAN TAKE THE PICTURE"
+                                    helperText.setTextColor(resources.getColor(R.color.light_green))
+                                    captureBtn.isEnabled = true
+                                    overlay.changeCircleColor(android.R.color.holo_green_light)
+                                    break
+                                }else{
+                                    helperText.text = "NO FACE IS SHOWING"
+                                    captureBtn.isEnabled = false
+                                }
                             } else {
                                 //reset or update to latest gesture instruction
                                 helperText.text = "${(gestureList.entries.firstOrNull { it.value == GestureStatus.NOT_DONE }?.key?.name
